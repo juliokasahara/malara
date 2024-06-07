@@ -41,6 +41,17 @@ public class EmployeeController {
         return ResponseEntity.ok("Deletado com sucesso!");
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Employee employee) {
+        var employeeDB = repository.findById(id).orElseThrow(() -> new RuntimeException("Erro ao recuperar os ddados"));
+
+        employeeDB.setName(employee.getName());
+
+        repository.save(employeeDB);
+
+        return ResponseEntity.ok("Atualizado!");
+    }
+
     @GetMapping
     public ResponseEntity<?> all(
             @RequestParam int page,
